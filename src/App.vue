@@ -2,7 +2,7 @@
   <div class="container">
     <div class="box" v-for="value in qtdBoxes" :key="value">
       <canvas :id="'canvas'+value" />
-      <h1 class>Caixa: {{value}}</h1>
+      <h1 class="text-box">{{`${value}`.padStart(2,'0')}}</h1>
     </div>
   </div>
 </template>
@@ -61,5 +61,6 @@
   }
 
   .text-box {
+    font-size: 100pt;
   }
 </style>
