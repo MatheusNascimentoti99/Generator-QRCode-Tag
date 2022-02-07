@@ -1,13 +1,16 @@
 <template>
-  <div class="container">
-    <div class="box" v-for="value in qtdBoxes" :key="value">
+  <div class="container" id="page">
+    <!-- <button @click="download">Download Cards</button> -->
+    <div :id="'box'+value" class="box" v-for="value in qtdBoxes" :key="value">
       <canvas :id="'canvas'+value" />
-      <h1 class="text-box">{{`${value}`.padStart(2,'0')}}</h1>
+      <span class="text-box">{{`${value}`.padStart(2,'0')}}</span>
     </div>
   </div>
 </template>
 
 <script>
+  import HTMLT2Canvas from 'html2canvas';
+
   export default {
     name: 'App',
     data() {
@@ -27,22 +30,46 @@
         });
       }
     },
+    methods:{
+      download(){
+        for (let i = 1; i <= this.qtdBoxes; i++) {
+          HTMLT2Canvas(document.querySelector('#box' + i))
+          .then((canvas) => {
+            const img = canvas.toDataURL("image/png");
+            this.saveAs(img,`box${i}.png`)
+          })
+        }
+      },
+      saveAs(uri, filename) {
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+          link.href = uri;
+          link.download = filename;
+
+          //Firefox requires the link to be in the body
+          document.body.appendChild(link);
+
+          //simulate click
+          link.click();
+
+          //remove the link when done
+          document.body.removeChild(link);
+        } else {
+          window.open(uri);
+        }
+      }
+    }
   };
 </script>
 
 <style>
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+
+  #page{
+    display: flex;
   }
 
   .container {
-    width: 100%;
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -51,16 +78,25 @@
   .box {
     display: flex;
     width: 22cm;
-    height: 6cm;
+    height: 7.316cm;
     justify-content: space-evenly;
     flex-direction: row;
     align-items: center;
     border: 2px solid black;
-    margin: 2px;
-    padding: 0px 8px 0px 8px;
+    /* margin: 0px 2px 0px 2px; */
   }
 
   .text-box {
     font-size: 100pt;
   }
+
+  /* print styles */
+@media print {
+
+  body {
+    margin: 0;
+    color: #000;
+    background-color: #dfd;
+  }
+}
 </style>
