@@ -16,8 +16,8 @@
     name: 'App',
     data() {
       return {
-        qtdBoxes: 90,
-        pages: 3
+        qtdBoxes: 100,
+        pages: 4
       };
     },
     components: {},
@@ -70,15 +70,14 @@
 
   .page{
     display: flex;
-    width: 3508px;
-    height: 4961px;
+    width: 3508px !important;
+    height: 4961px !important;
     margin: 16px;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
   .container {
-    display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
