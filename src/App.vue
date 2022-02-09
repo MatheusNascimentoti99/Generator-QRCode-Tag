@@ -27,7 +27,7 @@
         for (let i = 1; i <= this.qtdBoxes; i++) {
           let canvas = document.getElementById(`canvas${+i+this.qtdBoxes*(j-1)}`);
           console.log(`canvas${+i+this.qtdBoxes*(j-1)}`);
-          QRCode.toCanvas(canvas, `canvas${+i+this.qtdBoxes*(j-1)}`, { scale: 7 }, function (error) {
+          QRCode.toCanvas(canvas, `${+i+this.qtdBoxes*(j-1)}`, { scale: 7 }, function (error) {
             if (error) console.error(error);
             console.log('success!');
           });
@@ -40,7 +40,7 @@
         for (let i = 1; i <= this.pages; i++) {
           HTMLT2Canvas(document.querySelector('#page' + i)).then((canvas) => {
             const img = canvas.toDataURL("image/jpeg");
-            this.saveAs(img,`page-${i}.jpeg`)
+            this.saveAs(img,`page-retificado-${i}.jpeg`)
           })
         }
       },
